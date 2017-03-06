@@ -7,7 +7,19 @@ var bodyParser = require('body-parser');
 
 var index = require('./controllers/index');
 
+// referencing the item created in routes
+var items = require('./controllers/items');
+
 var app = express();
+
+// use mongoose to connect to mongodb
+var mongoose = require('mongoose');
+var conn = mongoose.connection;
+
+// link to config file
+var globals = require('./config/globals');
+
+conn.open(globals.db);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
