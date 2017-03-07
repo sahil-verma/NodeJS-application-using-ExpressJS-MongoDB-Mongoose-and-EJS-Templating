@@ -1,0 +1,60 @@
+<% include ../partials/header.ejs %>
+
+<h1>Items</h1>
+
+<% if (user) { %>
+    <button id="addNewItem" href="#" class="btn btn-primary">Add a New Item</button>
+<% } else { %>
+    <a href="/login" class="btn btn-primary">Add a New Item</a>
+<% } %>
+
+<div>
+    <!-- For add new item view -->
+    <form method="post" id="addItemView">
+        <table id="AddNewItemTable" class="table table-striped table-hover">
+    <tr>
+        <th><label for="title" class="col-sm-2 control-label">Title: *</label></th>
+        <th><label for="description" class="col-sm-2 control-label">Description: *</label></th>
+        <th><label for="price" class="col-sm-2 control-label">Price:</label></th>
+        <th>Done</th>
+    </tr>
+    <tr>
+        <td><input name="title" id="title" required /></td>
+        <td><input name="description" id="description" required /></td>
+        <td><input name="price" id="price" min="0.01" type="number" step="any"  /></td>
+        <td><button class="btn btn-success col-sm-offset-2">Save</button></td>
+    </tr>
+    </table>
+    </form>
+</div>
+
+<table id="itemsDisplay" class="table table-striped table-hover">
+
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    <% for (var i = 0; i < items.length; i++) { %>
+        <tr>
+            <td><%= items[i].title %></td>
+            <td><%= items[i].description %></td>
+            <td><%= items[i].price %></td>
+            <% if (user) { %>
+                <td>
+                    <a href="/items/<%= items[i]._id %>" class="btn btn-info">Edit</a>
+                    <a href="/items/delete/<%= items[i]._id %>" class="btn btn-danger confirmation">Delete</a>
+                </td>
+            <% } else { %>
+                <td>
+                    <a href="/items/<%= items[i]._id %>" class="btn btn-success success">Buy</a>
+                </td>
+            <% } %> 
+        </tr>
+    <% } %>
+
+</table>
+
+<% include ../partials/footer.ejs %>
